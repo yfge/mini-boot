@@ -1,0 +1,16 @@
+package com.github.yfge.miniboot.autoconfigure;
+
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface BootApplication {
+
+
+     String Value() default "";
+     String Name() default "";
+}
