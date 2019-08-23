@@ -11,6 +11,7 @@ public class ClassUtils {
 
     public List<String> loadClass(Class t){
         String packageName = t.getPackage().getName();
+        System.out.println(packageName);
         return loadClass(packageName);
     }
 
@@ -42,9 +43,11 @@ public class ClassUtils {
             while (entries.hasMoreElements()) {
                 JarEntry entry = entries.nextElement();
                 if (entry.isDirectory() == false) {
+
                     String entryName = entry.getName().replace('/','.');
                     if(entryName.endsWith(".class") && entryName.contains("$")==false ) {
                         classNames.add(entryName.replace(".class",""));
+
                     }
 
                 }
