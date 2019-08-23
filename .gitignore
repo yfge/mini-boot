@@ -1,0 +1,7 @@
+miniboot/target/classes
+miniboot/target/generated-sources
+miniboot/target/generated-test-sources
+miniboot/target/maven-archiver
+miniboot/target/maven-status
+miniboot/target/mini-boot-1.0-SNAPSHOT.jar
+miniboot/target/
