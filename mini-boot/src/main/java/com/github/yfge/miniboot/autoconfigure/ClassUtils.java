@@ -8,15 +8,11 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 public class ClassUtils {
-
     public List<String> loadClass(Class t){
         String packageName = t.getPackage().getName();
-        System.out.println(packageName);
         return loadClass(packageName);
     }
-
     private List<String> loadClass(String packageName) {
-
         String packagePath = packageName.replace('.','/');
         ClassLoader loader = ClassLoader.getSystemClassLoader();
         URL url = loader.getResource(packagePath);
@@ -27,7 +23,6 @@ public class ClassUtils {
             }else if (protocol.equals("jar")){
                 return getClassFromJar(url);
             }
-
         }else {
             System.out.println("loader fail.");
             return null;
@@ -35,7 +30,6 @@ public class ClassUtils {
         return  null;
     }
     private List<String> getClassFromJar(URL url){
-
         try {
             JarFile jarFile = ((JarURLConnection) url.openConnection()).getJarFile();
             Enumeration<JarEntry> entries = jarFile.entries();
@@ -43,13 +37,10 @@ public class ClassUtils {
             while (entries.hasMoreElements()) {
                 JarEntry entry = entries.nextElement();
                 if (entry.isDirectory() == false) {
-
                     String entryName = entry.getName().replace('/','.');
                     if(entryName.endsWith(".class") && entryName.contains("$")==false ) {
                         classNames.add(entryName.replace(".class",""));
-
                     }
-
                 }
             }
             return classNames;
@@ -59,8 +50,6 @@ public class ClassUtils {
     }
     private List<String> getClassFromDir(URL url ){
         return null;
-
     }
-
 
 }
