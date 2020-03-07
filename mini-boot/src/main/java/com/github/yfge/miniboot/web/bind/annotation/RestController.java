@@ -1,5 +1,6 @@
-package com.github.yfge.miniboot.autoconfigure;
+package com.github.yfge.miniboot.web.bind.annotation;
 
+import com.github.yfge.miniboot.autoconfigure.Service;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -8,5 +9,6 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Service {
+@Service
+public @interface RestController {
 }

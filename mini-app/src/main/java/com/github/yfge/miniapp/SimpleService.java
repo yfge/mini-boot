@@ -16,4 +16,11 @@ public class SimpleService {
     public String getServiceId(){
         return this.serviceId;
     }
+
+    public String getHelloMessage(){
+        StringBuilder builder = new StringBuilder();
+        builder.append("Hello ,the Service is :")
+                .append(this.serviceId);
+        return builder.toString();
+    }
 }
