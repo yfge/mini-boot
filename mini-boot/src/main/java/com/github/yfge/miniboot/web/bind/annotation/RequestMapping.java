@@ -8,10 +8,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE,ElementType.METHOD})
 public @interface RequestMapping {
-
-
-
     String[] path() default {};
-
     RequestMethod[] method() default {};
 }

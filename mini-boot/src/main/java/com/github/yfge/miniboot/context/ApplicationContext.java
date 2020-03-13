@@ -1,9 +1,13 @@
 package com.github.yfge.miniboot.context;
 
+import com.github.yfge.miniboot.autoconfigure.Service;
+
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+
+@Service
 public class ApplicationContext {
     private Map<String,Object> beanMap ;
     public ApplicationContext(){
