@@ -24,35 +24,35 @@ public class ServerRunnable implements Runnable {
             String method = this.exchange.getRequestMethod();
             System.out.println(method + " " + url);
 
+            ServerResponseData responseData=null;
             try {
-                var mappingInfo = this.urlMappingInfoMap.getOrDefault(url, null);
-                if (mappingInfo == null) {
-                    exchange.sendResponseHeaders(404, 0);
-                    exchange.getResponseBody().write("Error Not Found.".getBytes());
-                } else {
-                    boolean isAllowed = false;
-                    for (var allowedMethod : mappingInfo.getRequestMethods()) {
-                        if (allowedMethod.toString().equals(method)) {
-                            var ob = mappingInfo.getMethod().invoke(mappingInfo.getBean());
-                            exchange.sendResponseHeaders(200, 0);
-                            exchange.getResponseBody().write(ob.toString().getBytes());
-                            isAllowed=true;
-                            break;
-                        }
-                    }
-                    if(isAllowed ==false){
-                        exchange.sendResponseHeaders(405,0);
-                        exchange.getResponseBody().write("not allowed!".getBytes());
-                    }
-                }
+                responseData =  generateResponseData(url, method);
             }catch (Throwable e){
-                exchange.sendResponseHeaders(500,0);
-                exchange.getResponseBody().write("internal error".getBytes());
+
+                responseData= new ServerResponseData(500,"Server Internal Error".getBytes());
             }
+            exchange.sendResponseHeaders(responseData.getCode(),0);
+            exchange.getResponseBody().write(responseData.getData());
             exchange.getResponseBody().flush();
             exchange.getResponseBody().close();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private ServerResponseData generateResponseData(String url, String method) throws IOException, IllegalAccessException, InvocationTargetException {
+        var mappingInfo = this.urlMappingInfoMap.getOrDefault(url, null);
+        if (mappingInfo == null) {
+            return new ServerResponseData(405,"Not Allowed".getBytes());
+        } else {
+            for (var allowedMethod : mappingInfo.getRequestMethods()) {
+                if (allowedMethod.toString().equals(method)) {
+                    var ob = mappingInfo.getMethod().invoke(mappingInfo.getBean());
+                    return new ServerResponseData(200,ob.toString().getBytes());
+                }
+            }
+            return new ServerResponseData(405,"Not Allowed".getBytes());
+
         }
     }
 }
